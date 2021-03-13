@@ -615,6 +615,17 @@ tts_rw_lock_smoke_check_test_thread(void *_udata)
  **********************************************************************
  */
 
+static struct timespec
+subtract_timespec(struct timespec l, struct timespec r)
+{
+    if (l.tv_nsec < r.tv_nsec) {
+        return (struct timespec){.tv_sec = l.tv_sec - r.tv_sec - 1,
+            .tv_nsec = 1000 * 1000 * 1000 + l.tv_nsec - r.tv_nsec};
+    }
+    return (struct timespec){.tv_sec = l.tv_sec - r.tv_sec,
+                             .tv_nsec = l.tv_nsec - r.tv_nsec};
+}
+
 void
 tts_rec_rw_lock_smoke_check_2(void)
 {
@@ -721,7 +732,7 @@ tts_rec_rw_lock_smoke_check_2(void)
     }
 
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "%s: %d threads %d lock cycles in %ju.%09ju seconds\n", __func__, num_threads,
             lock_cycles, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
@@ -979,7 +990,7 @@ tts_rec_rw_lock_smoke_check_3(void)
     }
 
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "%s: %d threads %d lock cycles in %ju.%09ju seconds\n", __func__, num_threads,
             lock_cycles, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
@@ -1236,7 +1247,7 @@ tts_rec_rw_lock_smoke_check_4(void)
     }
 
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "%s: %d threads %d lock cycles in %ju.%09ju seconds\n", __func__, num_threads,
             lock_cycles, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
@@ -1384,7 +1395,7 @@ tts_rec_rw_lock_perf_check_1(void)
             abort();
     }
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "non-recursive, rdlock/unlock %d times in %ju.%09ju seconds\n", times,
             (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
@@ -1397,7 +1408,7 @@ tts_rec_rw_lock_perf_check_1(void)
             abort();
     }
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "non-recursive, wrlock/unlock %d times in %ju.%09ju seconds\n", times,
             (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
@@ -1414,7 +1425,7 @@ tts_rec_rw_lock_perf_check_1(void)
     if (H5TS_pt_rec_rw_unlock(&rwl) != SUCCEED)
         abort();
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "recursive, rdlock/unlock %d times in %ju.%09ju seconds\n", times,
             (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
@@ -1431,7 +1442,7 @@ tts_rec_rw_lock_perf_check_1(void)
     if (H5TS_pt_rec_rw_unlock(&rwl) != SUCCEED)
         abort();
     clock_gettime(CLOCK_MONOTONIC, &stop);
-    timespecsub(&stop, &start, &elapsed);
+    elapsed = subtract_timespec(stop, start);
 
     fprintf(stderr, "recursive, wrlock/unlock %d times in %ju.%09ju seconds\n", times,
             (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
