@@ -619,11 +619,10 @@ static struct timespec
 subtract_timespec(struct timespec l, struct timespec r)
 {
     if (l.tv_nsec < r.tv_nsec) {
-        return (struct timespec){.tv_sec = l.tv_sec - r.tv_sec - 1,
-            .tv_nsec = 1000 * 1000 * 1000 + l.tv_nsec - r.tv_nsec};
+        return (struct timespec){.tv_sec  = l.tv_sec - r.tv_sec - 1,
+                                 .tv_nsec = 1000 * 1000 * 1000 + l.tv_nsec - r.tv_nsec};
     }
-    return (struct timespec){.tv_sec = l.tv_sec - r.tv_sec,
-                             .tv_nsec = l.tv_nsec - r.tv_nsec};
+    return (struct timespec){.tv_sec = l.tv_sec - r.tv_sec, .tv_nsec = l.tv_nsec - r.tv_nsec};
 }
 
 void
