@@ -426,10 +426,10 @@ typedef struct H5TS_pt_rec_rw_lock_stats_t {
 
 typedef struct H5TS_pt_rec_rw_lock_t {
 
-    uint32_t                 magic;
-    pthread_rwlock_t         rwlock;
-    pthread_key_t            held_key;
-    pthread_key_t            released_key;
+    uint32_t                    magic;
+    pthread_rwlock_t            rwlock;
+    pthread_key_t               held_key;
+    pthread_key_t               released_key;
     H5TS_pt_rec_rw_lock_stats_t stats;
 
 } H5TS_pt_rec_rw_lock_t;
@@ -466,8 +466,8 @@ typedef struct H5TS_pt_rec_rw_lock_t {
 typedef struct H5TS_pt_rec_entry_count_t {
 
     uint32_t magic;
-    bool  writer;
-    uint32_t  nholds;
+    bool     writer;
+    uint32_t nholds;
 
 } H5TS_pt_rec_entry_count_t;
 

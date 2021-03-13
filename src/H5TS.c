@@ -797,12 +797,10 @@ H5TS_pt_rec_rw_lock_init(H5TS_pt_rec_rw_lock_t *rw_lock_ptr, int policy)
     if (pthread_rwlock_init(&rw_lock_ptr->rwlock, NULL) != 0)
         return FAIL;
 
-    if (pthread_key_create(&rw_lock_ptr->held_key,
-                           H5TS_free_pt_rec_entry_count) != 0)
+    if (pthread_key_create(&rw_lock_ptr->held_key, H5TS_free_pt_rec_entry_count) != 0)
         return FAIL;
 
-    if (pthread_key_create(&rw_lock_ptr->released_key,
-                           H5TS_free_pt_rec_entry_count) != 0) {
+    if (pthread_key_create(&rw_lock_ptr->released_key, H5TS_free_pt_rec_entry_count) != 0) {
         pthread_key_delete(rw_lock_ptr->held_key);
         return FAIL;
     }
@@ -845,8 +843,7 @@ H5TS_pt_rec_rw_lock_takedown(H5TS_pt_rec_rw_lock_t *rw_lock_ptr)
      */
     rw_lock_ptr->magic = 0;
 
-    if (pthread_rwlock_destroy(&rw_lock_ptr->rwlock) < 0 ||
-        pthread_key_delete(rw_lock_ptr->held_key) < 0 ||
+    if (pthread_rwlock_destroy(&rw_lock_ptr->rwlock) < 0 || pthread_key_delete(rw_lock_ptr->held_key) < 0 ||
         pthread_key_delete(rw_lock_ptr->released_key) < 0)
         return FAIL;
 
@@ -894,7 +891,8 @@ H5TS_pt_rec_rw_rdlock(H5TS_pt_rec_rw_lock_t *rw_lock_ptr)
     if (count_ptr != NULL) {
         if (count_ptr->magic != H5TS_PT_REC_RW_REC_ENTRY_COUNT_MAGIC)
             return FAIL;
-    } else if ((count_ptr = malloc(sizeof(*count_ptr))) == NULL)
+    }
+    else if ((count_ptr = malloc(sizeof(*count_ptr))) == NULL)
         return FAIL;
     else {
         count_ptr->magic = H5TS_PT_REC_RW_REC_ENTRY_COUNT_MAGIC;
@@ -953,9 +951,11 @@ H5TS_pt_rec_rw_wrlock(H5TS_pt_rec_rw_lock_t *rw_lock_ptr)
     if (count_ptr != NULL) {
         if (count_ptr->magic != H5TS_PT_REC_RW_REC_ENTRY_COUNT_MAGIC)
             return FAIL;
-    } else if ((count_ptr = malloc(sizeof(*count_ptr))) == NULL) {
+    }
+    else if ((count_ptr = malloc(sizeof(*count_ptr))) == NULL) {
         return FAIL;
-    } else {
+    }
+    else {
         count_ptr->magic = H5TS_PT_REC_RW_REC_ENTRY_COUNT_MAGIC;
         pthread_setspecific(rw_lock_ptr->released_key, count_ptr);
     }
