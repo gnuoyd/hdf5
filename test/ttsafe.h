@@ -35,6 +35,7 @@ void tts_rec_rw_lock_smoke_check_1(void);
 void tts_rec_rw_lock_smoke_check_2(void);
 void tts_rec_rw_lock_smoke_check_3(void);
 void tts_rec_rw_lock_smoke_check_4(void);
+void tts_rec_rw_lock_perf_check_1(void);
 #endif /* H5_USE_RECURSIVE_WRITER_LOCKS */
 void tts_dcreate(void);
 void tts_error(void);
@@ -48,6 +49,7 @@ void cleanup_rec_rw_lock_smoke_check_1(void);
 void cleanup_rec_rw_lock_smoke_check_2(void);
 void cleanup_rec_rw_lock_smoke_check_3(void);
 void cleanup_rec_rw_lock_smoke_check_4(void);
+void cleanup_rec_rw_lock_perf_check_1(void);
 #endif /* H5_USE_RECURSIVE_WRITER_LOCKS */
 void cleanup_dcreate(void);
 void cleanup_error(void);

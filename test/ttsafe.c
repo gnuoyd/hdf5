@@ -105,6 +105,9 @@ main(int argc, char *argv[])
 #ifdef H5_HAVE_THREADSAFE
 
 #ifdef H5_USE_RECURSIVE_WRITER_LOCKS
+    AddTest("perf_rwlock_1", tts_rec_rw_lock_perf_check_1,
+        cleanup_rec_rw_lock_perf_check_1,
+        "recursive R/W lock performance check 1", NULL);
     AddTest("rec_rwlock_1", tts_rec_rw_lock_smoke_check_1, cleanup_rec_rw_lock_smoke_check_1,
             "recursive R/W lock smoke check 1 -- basic", NULL);
 
