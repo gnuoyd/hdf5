@@ -426,26 +426,16 @@ typedef struct H5TS_pt_rec_rw_lock_stats_t {
 
 typedef struct H5TS_pt_rec_rw_lock_t {
 
-    uint32_t                           magic;
-    int32_t                            policy;
-    pthread_mutex_t                    mutex;
-    pthread_cond_t                     readers_cv;
-    pthread_cond_t                     writers_cv;
-    int32_t                            waiting_readers_count;
-    int32_t                            waiting_writers_count;
-    int32_t                            active_readers;
-    int32_t                            active_writers;
-    pthread_key_t                      rec_entry_count_key;
-    int32_t                            writer_rec_entry_count;
-    struct H5TS_pt_rec_rw_lock_stats_t stats;
+    uint32_t                 magic;
+    pthread_rwlock_t         rwlock;
+    pthread_key_t            held_key;
+    pthread_key_t            released_key;
+    H5TS_pt_rec_rw_lock_stats_t stats;
 
 } H5TS_pt_rec_rw_lock_t;
 
-/******************************************************************************
- *
- * Structure H5TS_pt_rec_entry_count_t
- *
- * Strucure associated with the reader_rec_entry_count_key defined in
+/*
+ * Structure associated with the held_key and released_key defined in
  * H5TS_pt_rec_rw_lock_t.
  *
  * The primary purpose of this structure is to maintain a count of recursive
@@ -476,8 +466,8 @@ typedef struct H5TS_pt_rec_rw_lock_t {
 typedef struct H5TS_pt_rec_entry_count_t {
 
     uint32_t magic;
-    hbool_t  write_lock;
-    int64_t  rec_lock_count;
+    bool  writer;
+    uint32_t  nholds;
 
 } H5TS_pt_rec_entry_count_t;
 
