@@ -618,7 +618,7 @@ tts_rw_lock_smoke_check_test_thread(void *_udata)
 void
 tts_rec_rw_lock_smoke_check_2(void)
 {
-    struct timespec elapsed, start, stop;
+    struct timespec                    elapsed, start, stop;
     hbool_t                            verbose = FALSE;
     herr_t                             result;
     int                                express_test;
@@ -723,10 +723,8 @@ tts_rec_rw_lock_smoke_check_2(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "%s: %d threads %d lock cycles in %ju.%09ju seconds\n",
-        __func__, num_threads, lock_cycles,
-        (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "%s: %d threads %d lock cycles in %ju.%09ju seconds\n", __func__, num_threads,
+            lock_cycles, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     /* 5) Examine the user data from the threads, to determine the
      *    total number of real and recursive read locks and un-lock.
@@ -878,7 +876,7 @@ cleanup_rec_rw_lock_smoke_check_2(void)
 void
 tts_rec_rw_lock_smoke_check_3(void)
 {
-    struct timespec elapsed, start, stop;
+    struct timespec                    elapsed, start, stop;
     hbool_t                            verbose = FALSE;
     herr_t                             result;
     int                                i;
@@ -983,10 +981,8 @@ tts_rec_rw_lock_smoke_check_3(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "%s: %d threads %d lock cycles in %ju.%09ju seconds\n",
-        __func__, num_threads, lock_cycles,
-        (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "%s: %d threads %d lock cycles in %ju.%09ju seconds\n", __func__, num_threads,
+            lock_cycles, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     /* 5) Examine the user data from the threads, to determine the
      *    total number of real and recursive read locks and un-lock.
@@ -1138,7 +1134,7 @@ cleanup_rec_rw_lock_smoke_check_3(void)
 void
 tts_rec_rw_lock_smoke_check_4(void)
 {
-    struct timespec elapsed, start, stop;
+    struct timespec                    elapsed, start, stop;
     hbool_t                            verbose = FALSE;
     herr_t                             result;
     int                                i;
@@ -1242,10 +1238,8 @@ tts_rec_rw_lock_smoke_check_4(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "%s: %d threads %d lock cycles in %ju.%09ju seconds\n",
-        __func__, num_threads, lock_cycles,
-        (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "%s: %d threads %d lock cycles in %ju.%09ju seconds\n", __func__, num_threads,
+            lock_cycles, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     /* 5) Examine the user data from the threads, to determine the
      *    total number of real and recursive read locks and un-lock.
@@ -1372,10 +1366,10 @@ cleanup_rec_rw_lock_smoke_check_4(void)
 void
 tts_rec_rw_lock_perf_check_1(void)
 {
-    herr_t ret;
-    int i, times = 100 * 1000 * 1000;
+    herr_t                       ret;
+    int                          i, times = 100 * 1000 * 1000;
     struct H5TS_pt_rec_rw_lock_t rwl;
-    struct timespec elapsed, start, stop;
+    struct timespec              elapsed, start, stop;
 
     ret = H5TS_pt_rec_rw_lock_init(&rwl, H5TS__RW_LOCK_POLICY__FAVOR_WRITERS);
 
@@ -1392,9 +1386,8 @@ tts_rec_rw_lock_perf_check_1(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "non-recursive, rdlock/unlock %d times in %ju.%09ju seconds\n",
-        times, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "non-recursive, rdlock/unlock %d times in %ju.%09ju seconds\n", times,
+            (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     clock_gettime(CLOCK_MONOTONIC, &start);
     for (i = 0; i < times; i++) {
@@ -1406,9 +1399,8 @@ tts_rec_rw_lock_perf_check_1(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "non-recursive, wrlock/unlock %d times in %ju.%09ju seconds\n",
-        times, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "non-recursive, wrlock/unlock %d times in %ju.%09ju seconds\n", times,
+            (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     clock_gettime(CLOCK_MONOTONIC, &start);
     if (H5TS_pt_rec_rw_rdlock(&rwl) != SUCCEED)
@@ -1424,9 +1416,8 @@ tts_rec_rw_lock_perf_check_1(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "recursive, rdlock/unlock %d times in %ju.%09ju seconds\n",
-        times, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "recursive, rdlock/unlock %d times in %ju.%09ju seconds\n", times,
+            (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     clock_gettime(CLOCK_MONOTONIC, &start);
     if (H5TS_pt_rec_rw_wrlock(&rwl) != SUCCEED)
@@ -1442,9 +1433,8 @@ tts_rec_rw_lock_perf_check_1(void)
     clock_gettime(CLOCK_MONOTONIC, &stop);
     timespecsub(&stop, &start, &elapsed);
 
-    fprintf(stderr,
-        "recursive, wrlock/unlock %d times in %ju.%09ju seconds\n",
-        times, (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
+    fprintf(stderr, "recursive, wrlock/unlock %d times in %ju.%09ju seconds\n", times,
+            (uintmax_t)elapsed.tv_sec, (uintmax_t)elapsed.tv_nsec);
 
     H5TS_pt_rec_rw_lock_takedown(&rwl);
 }
